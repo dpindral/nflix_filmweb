@@ -107,20 +107,24 @@ var userID = '2037911';
         if(centers.length<1){
             return;
         }
-
-        var h = centers[0].innerHTML;
+        var part = centers[0];
+        var h = part.innerHTML;
+        var type = 'film';
+        if(h.indexOf('<span class="label label-default">Serial</span>')>-1){
+            type = 'serial';
+        }
+        
         h = h.substring(h.indexOf("</a>")+4);
         var ind = h.indexOf("(")+1;
         var year = h.substring(ind,ind+4);
-        var title = centers[0].getElementsByTagName("a")[0].innerText.split("/")[0].trim().toLowerCase();
+        var tpart = part.getElementsByTagName("a")[0].innerText.replace(new RegExp("&nbsp;", 'g'), " ");
+        var titles = tpart.split("/");
+        var title = titles[0].trim().toLowerCase();
         var titlePl = '';
-        if(centers[0].getElementsByTagName("a")[0].innerText.split("/").length>1){
-            titlePl = centers[0].getElementsByTagName("a")[0].innerText.split("/")[1].trim().toLowerCase();
+        if(titles.length>1){
+            titlePl = titles[1].trim().toLowerCase();
         }
-        var type = 'film';
-        if(centers[0].innerHTML.indexOf('<span class="label label-default">Serial</span>')>-1){
-            type = 'serial';
-        }
+        
 
         for(var mi =0; mi<movies.length;mi++){
             var m = movies[mi];
@@ -129,14 +133,14 @@ var userID = '2037911';
                 node.setAttribute("class", "label label-success");
                 var textnode = document.createTextNode("Twoja ocena: ["+m.rating+"]");
                 node.appendChild(textnode);
-                centers[0].appendChild(node);
+                part.appendChild(node);
                 node = document.createElement("br");
-                centers[0].appendChild(node);
+                part.appendChild(node);
                 break;
             }
         }
 
-        getFilmwebScore(centers[0], title, year, type);
+        getFilmwebScore(part, title, year, type);
     }
 
     function addRatingsToHtml(){
