@@ -7,8 +7,8 @@
 // @match        https://www.nflix.pl/netflix-polska-lista-wszystkich-dostepnych-tytulow/*
 // @run-at       document-start
 // @grant        GM_xmlhttpRequest
-// @updateURL   https://raw.githubusercontent.com/dpindral/nflix_filmweb/master/nflix_filmweb.user.js
-// @downloadURL https://raw.githubusercontent.com/dpindral/nflix_filmweb/master/nflix_filmweb.user.js
+// @updateURL   https://github.com/dpindral/nflix_filmweb/raw/master/nflix_filmweb.user.js
+// @downloadURL https://github.com/dpindral/nflix_filmweb/raw/master/nflix_filmweb.user.js
 // ==/UserScript==
 
 var userID = '2037911';
