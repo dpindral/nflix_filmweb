@@ -146,6 +146,10 @@ var userID = '2037911';
     function addRatingsToHtml(){
         var cells = document.getElementsByTagName("td");
         for(var i=0;i<cells.length;i++){
+            var x = cells[i].getAttribute("width");
+            if(x===null || x!="25%"){
+                continue;
+            }
             addRatingToCell(cells[i]);
         }
     }
