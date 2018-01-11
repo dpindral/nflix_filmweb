@@ -47,6 +47,7 @@ var userID = '2037911';
     }
 
     function getRatings(){
+
         GM_xmlhttpRequest({
             method : "GET",
             url : "http://www.filmweb.pl/splitString/user/"+userID+"/filmVotes",
@@ -67,23 +68,28 @@ var userID = '2037911';
                 url : "http://www.filmweb.pl/search/"+type+"?q="+title+"&startYear="+year+"&endYear="+year,
                 onload : function(e){
                     var t = e.responseText;
-                    var scoreSpan = ',rate : ';
+                    var scoreSpan = '<div id="searchResult" >';
                     var ind = t.indexOf(scoreSpan);
                     if(ind==-1) return;
                     ind += scoreSpan.length;
                     t = t.substring(ind);
-                    ind = t.indexOf(' ');
-                    var scores = t.substring(0,ind);
-                    var score = parseFloat(scores);
 
-                    t = e.responseText;
-                    scoreSpan = ',link : \'';
+                    scoreSpan = 'class="filmPreview__link" href="';
                     ind = t.indexOf(scoreSpan);
                     if(ind==-1) return;
                     ind += scoreSpan.length;
                     t = t.substring(ind);
-                    ind = t.indexOf('\'');
+                    ind = t.indexOf('"');
                     var fwid = t.substring(0,ind);
+
+                    scoreSpan = 'data-rate="';
+                    ind = t.indexOf(scoreSpan);
+                    if(ind==-1) return;
+                    ind += scoreSpan.length;
+                    t = t.substring(ind);
+                    ind = t.indexOf('"');
+                    var scores = t.substring(0,ind);
+                    var score = parseFloat(scores);
 
                     var fwtext = document.createTextNode("Filmweb");
                     var fwlink = document.createElement("a");
@@ -144,6 +150,7 @@ var userID = '2037911';
     }
 
     function addRatingsToHtml(){
+        console.log("adding notes "+ movies.length);
         var cells = document.getElementsByTagName("td");
         for(var i=0;i<cells.length;i++){
             var x = cells[i].getAttribute("width");
